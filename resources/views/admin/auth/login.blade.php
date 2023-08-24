@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @include('Admin.auth.css')
+    @include('admin.auth.css')
 </head>
 
 <div class="container">
@@ -32,5 +32,5 @@
     </div>
 </div>
 
-@include('Admin.auth.js')
+@include('admin.auth.js')
 </html>
