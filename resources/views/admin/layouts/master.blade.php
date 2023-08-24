@@ -2,28 +2,28 @@
 <html lang="ar" dir="rtl">
 
 <head>
-    @include('Admin/layouts/head')
+    @include('admin/layouts/head')
 </head>
 
 <body class="app sidebar-mini">
 
 <!-- Start Switcher -->
-{{--@include('Admin/layouts/switcher')--}}
+{{--@include('admin/layouts/switcher')--}}
 <!-- End Switcher -->
 
 <!-- GLOBAL-LOADER -->
-@include('Admin/layouts/loader')
+@include('admin/layouts/loader')
 <!-- /GLOBAL-LOADER -->
 
 <!-- PAGE -->
 <div class="page">
     <div class="page-main">
         <!--APP-SIDEBAR-->
-    @include('Admin/layouts/main-sidebar')
+    @include('admin/layouts/main-sidebar')
     <!--/APP-SIDEBAR-->
 
         <!-- Header -->
-    @include('Admin/layouts/main-header')
+    @include('admin/layouts/main-header')
     <!-- Header -->
         <!--Content-area open-->
         <div class="app-content">
@@ -49,13 +49,13 @@
     <!-- SIDE-BAR -->
 
     <!-- FOOTER -->
-@include('Admin/layouts/footer')
+@include('admin/layouts/footer')
 <!-- FOOTER END -->
 </div>
 <!-- BACK-TO-TOP -->
 <a href="#top" id="back-to-top"><i class="fa fa-angle-up mt-4"></i></a>
 
-@include('Admin/layouts/scripts')
+@include('admin/layouts/scripts')
 @yield('ajaxCalls')
 @toastr_js
 @toastr_render

@@ -1,4 +1,4 @@
-@extends('Admin/layouts/master')
+@extends('admin/layouts/master')
 @section('title')
     {{($setting->title) ?? 'الصفحة الرئيسية'}} | لوحة التحكم
 @endsection
