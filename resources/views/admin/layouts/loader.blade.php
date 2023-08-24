@@ -22,5 +22,5 @@
     }
 </style>
 <div class="Global-Loader" id="global-loader">
-    <img style="width: 250px;" src="{{ asset('assets/admin/assets/images/logo1.png') }}" class="loader-img" alt="Loader">
+    <img style="width: 250px;" src="{{ asset($setting->logo) ?? asset('assets/uploads/logo.png')}}" class="loader-img" alt="Loader">
 </div>

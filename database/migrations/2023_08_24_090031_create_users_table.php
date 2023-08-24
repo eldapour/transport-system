@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->longText('image');
             $table->string('phone')->unique();
             $table->bigInteger('city_id');
-            $table->enum('type', ['driver', 'user']);
-            $table->enum('user_type', ['person', 'company']);
+            $table->enum('type', ['driver', 'person','company']);
+            $table->boolean('status')->default(true);
 
             $table->foreign('city_id')
                 ->on('cities')

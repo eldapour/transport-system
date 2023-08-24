@@ -17,10 +17,9 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->string('name_ar')->comment('اسم التطبيق');
             $table->string('name_en')->comment('اسم التطبيق');
+            $table->longText('logo')->comment('لوجو التطبيق');
             $table->longText('conditions_ar')->comment('الشروط والاحكام');
             $table->longText('conditions_en')->comment('الشروط والاحكام');
-            $table->longText('policy_ar');
-            $table->longText('policy_en');
             $table->bigInteger('shipment_price')->comment('سعر الشحنه لكل');
             $table->timestamps();
         });

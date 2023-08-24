@@ -1,22 +1,17 @@
 @extends('admin/layouts/master')
 
 @section('title')
-    {{($setting->name_en) ?? ''}} | المشرفين
+    {{($setting->name_en) ?? ''}} | المستخدمين (الشركات)
 @endsection
-@section('page_name') المشرفين @endsection
+@section('page_name') المستخدمين (الشركات)  @endsection
 @section('content')
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> مشرفين {{($setting->name_en) ?? ''}}</h3>
+                    <h3 class="card-title"> مستخدمين (الشركات){{($setting->name_en) ?? ''}}</h3>
                     <div class="">
-                        <button class="btn btn-secondary btn-icon text-white addBtn">
-									<span>
-										<i class="fe fe-plus"></i>
-									</span> اضافة جديد
-                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -29,6 +24,9 @@
                                 <th class="min-w-50px">الصورة</th>
                                 <th class="min-w-50px">الاسم</th>
                                 <th class="min-w-125px">الايميل</th>
+                                <th class="min-w-125px">الهاتف</th>
+                                <th class="min-w-125px">المدينه</th>
+                                <th class="min-w-50px">الحالة</th>
                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
@@ -69,7 +67,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="example-Modal3">بيانات المشرف</h5>
+                        <h5 class="modal-title" id="example-Modal3">بيانات </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -91,17 +89,14 @@
             {data: 'image', name: 'image'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
+            {data: 'phone', name: 'phone'},
+            {data: 'city_id', name: 'city_id'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('admins.index')}}', columns);
+        showData('{{route('userCompany.index')}}', columns);
         // Delete Using Ajax
-        deleteScript('{{route('delete_admin')}}');
-        // Add Using Ajax
-        showAddModal('{{route('admins.create')}}');
-        addScript();
-        // Add Using Ajax
-        showEditModal('{{route('admins.edit',':id')}}');
-        editScript();
+        deleteScript('{{route('user_delete')}}');
     </script>
 @endsection
 
