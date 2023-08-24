@@ -1,40 +1,34 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
+use App\Interfaces\AuthInterface;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
 
-    public function index(){
-        if (Auth::guard('admin')->check()){
-            return redirect('admin');
-        }
-        return view('Admin.auth.login');
-    }
+    protected AuthInterface $authInterface;
 
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function __construct(AuthInterface $authInterface)
     {
-        $data = $request->validate([
-            'email'   =>'required|exists:admins',
-            'password'=>'required'
-        ],[
-            'email.exists'      => 'هذا البريد غير مسجل معنا',
-            'email.required'    => 'يرجي ادخال البريد الالكتروني',
-            'password.required' => 'يرجي ادخال كلمة المرور',
-        ]);
-        if (Auth::guard('admin')->attempt($data)){
-            return response()->json(200);
-        }
-        return response()->json(405);
+        $this->authInterface = $authInterface;
     }
 
-    public function logout(){
-        Auth::guard('admin')->logout();
-        toastr()->info('تم تسجيل الخروج');
-        return redirect('admin/login');
+    public function index()
+    {
+        return $this->authInterface->index();
+    }
+
+    public function login(Request $request)
+    {
+        return $this->authInterface->login($request);
+    }
+
+    public function logout()
+    {
+        return $this->authInterface->logout();
     }
 
 }//end class
