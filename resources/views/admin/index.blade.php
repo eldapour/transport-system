@@ -12,8 +12,8 @@
                 <div class="card-body">
                     <div class="d-flex">
 
-                        <div class="text-white"><h2 class="mb-0 number-font">33</h2>
-                            <p class="text-white mb-0">عدد الطلبات</p></div>
+                        <div class="text-white"><h2 class="mb-0 number-font">{{ \App\Models\User::where('type','driver')->count() }}</h2>
+                            <p class="text-white mb-0">عدد السائقين</p></div>
                         <div class="mr-auto">
                             <i class="fe fe-users text-white fs-30 ml-2 mt-2"></i>
                         </div>
