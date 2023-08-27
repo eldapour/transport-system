@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Interfaces\DriverInterface;
+use App\Models\City;
 use App\Models\User;
 use App\Traits\PhotoTrait;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Yajra\DataTables\DataTables;
 
 class DriverRepository implements DriverInterface
@@ -48,34 +50,21 @@ class DriverRepository implements DriverInterface
         }
     }
 
-
-    public function delete($request)
-    {
-        $driver = User::where('id', $request->id)->first();
-        if ($driver == auth()->guard('admin')->user()) {
-            return response(['message' => "لا يمكن حذف المشرف المسجل به !", 'status' => 501], 200);
-        } else {
-            if (file_exists($driver->image)) {
-                unlink($driver->image);
-            }
-            $driver->delete();
-            return response(['message' => 'تم الحذف بنجاح', 'status' => 200], 200);
-        }
-    }
-
     public function create()
     {
-        return view('admin.driver.parts.create');
+        $cities = City::query()->select('id', 'name_ar')->get();
+        return view('admin.driver.parts.create', compact('cities'));
     }
 
-    public function store($request)
+    public function store($request): JsonResponse
     {
         $inputs = $request->all();
+        $inputs['status'] = 1;
         if ($request->has('image')) {
-            $inputs['image'] = $this->saveImage($request->image, 'uploads/admins', 'photo');
+            $inputs['image'] = $this->saveImage($request->image, 'uploads/driver', 'photo');
         }
         $inputs['password'] = Hash::make($request->password);
-        if (User::create($inputs))
+        if (User::query()->create($inputs))
             return response()->json(['status' => 200]);
         else
             return response()->json(['status' => 405]);
@@ -83,21 +72,25 @@ class DriverRepository implements DriverInterface
 
     public function edit($driver)
     {
-        return view('admin.driver.parts.edit', compact('driver'));
+        $cities = City::query()->select('id', 'name_ar')->get();
+        return view('admin.driver.parts.edit', compact('driver', 'cities'));
     }
 
-    public function update($request, $id)
+    public function update($request, $id): JsonResponse
     {
         $inputs = $request->except('id');
 
-        $driver = User::findOrFail($id);
+        $driver = User::query()->findOrFail($id);
 
         if ($request->has('image')) {
             if (file_exists($driver->image)) {
                 unlink($driver->image);
             }
-            $inputs['image'] = $this->saveImage($request->image, 'uploads/admins', 'photo');
+            $inputs['image'] = $this->saveImage($request->image, 'uploads/drivers', 'photo');
+        } else {
+            unset($inputs['image']);
         }
+
         if ($request->has('password') && $request->password != null)
             $inputs['password'] = Hash::make($request->password);
         else
@@ -107,5 +100,17 @@ class DriverRepository implements DriverInterface
             return response()->json(['status' => 200]);
         else
             return response()->json(['status' => 405]);
+    }
+
+    public function delete($request)
+    {
+        $driver = User::query()->where('id', $request->id)->first();
+
+        if (file_exists($driver->image)) {
+            unlink($driver->image);
+        }
+        $driver->delete();
+        return response(['message' => 'تم الحذف بنجاح', 'status' => 200], 200);
+
     }
 }

@@ -38,7 +38,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                 'national_id' => 'required|numeric',
                 'phone' => 'required|numeric',
                 'city_id' => 'required|exists:cities,id',
-                'type' => 'required|in:company,person,driver',
+                'type' => 'required|in:company,person',
 
             ];
 
@@ -101,11 +101,9 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
             $rules = [
                 'email' => 'required|email|exists:users,email',
                 'password' => 'required|min:6',
-                'type' => 'required|in:person,company,driver',
             ];
             $validator = Validator::make($request->all(), $rules, [
                 'email.exists' => 409,
-                'type.in' => 410,
             ]);
 
             if ($validator->fails()) {
@@ -115,7 +113,6 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
 
                     $errors_arr = [
                         409 => 'Failed,Email not exists',
-                        410 => 'Failed,The type must be an company or driver or person'
                     ];
 
                     $code = collect($validator->errors())->flatten(1)[0];
@@ -124,7 +121,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                 return self::returnResponseDataApi(null,$validator->errors()->first(),422,422);
             }
 
-            $token = Auth::guard('user-api')->attempt($request->only(['email', 'password','type']));
+            $token = Auth::guard('user-api')->attempt($request->only(['email', 'password']));
             if (!$token) {
                 return self::returnResponseDataApi(null, "كلمه المرور خطاء يرجي المحاوله مره اخري", 403,403);
             }

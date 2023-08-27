@@ -59,9 +59,15 @@
 <!-- Switcher JS -->
 <script src="{{asset('assets/admin')}}/assets/switcher/js/switcher-rtl.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+
+<script src="{{ asset('assets/admin/assets/js/select2.js') }}"></script>
+
 <script>
     $(document).ready(function () {
         $('.dropify').dropify();
+    });
+    $(document).ready(function () {
+        $('select').select2();
     });
 </script>
 
