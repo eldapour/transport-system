@@ -38,7 +38,8 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                 'national_id' => 'required|numeric',
                 'phone' => 'required|numeric',
                 'city_id' => 'required|exists:cities,id',
-                'type' => 'required|in:company,person',
+                'type' => 'required|in:user',
+                'user_type' => 'required|in:person,company',
 
             ];
 
@@ -73,6 +74,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                 'image' => 'uploads/users/avatar.png',
                 'city_id' => $request->city_id,
                 'type' => $request->type,
+                'user_type' => $request->user_type,
                 'status' => 1
             ]);
 
@@ -101,6 +103,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
             $rules = [
                 'email' => 'required|email|exists:users,email',
                 'password' => 'required|min:6',
+                'type' => 'required|in:user,driver',
             ];
             $validator = Validator::make($request->all(), $rules, [
                 'email.exists' => 409,
