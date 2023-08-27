@@ -14,10 +14,10 @@ class CreateOffersTable extends Migration
     public function up()
     {
         Schema::create('offers', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('driver_id');
-            $table->bigInteger('order_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('driver_id');
+            $table->unsignedBigInteger('order_id');
             $table->dateTime('date');
             $table->double('price','10,2');
             $table->boolean('status')

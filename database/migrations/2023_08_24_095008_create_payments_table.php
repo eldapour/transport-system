@@ -14,10 +14,10 @@ class CreatePaymentsTable extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->longText('payment_id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('order_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('order_id');
             $table->text('currency');
             $table->double('amount','10,2');
             $table->boolean('status');

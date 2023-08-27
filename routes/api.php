@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => 'check-lang'], function (){
 
-Route::group([ 'middleware' => 'api','namespace' => 'Api'], function () {
+Route::group(['prefix' => 'auth','middleware' => 'jwt'], function () {
+
+    Route::get('getProfile',[UserController::class,'getProfile']);
+    Route::post('updateProfile',[UserController::class,'updateProfile']);
+    Route::post('logout',[UserController::class,'logout']);
 
 });
 
+Route::get('cities',[UserController::class,'getAllCities']);
+Route::post('auth/register',[UserController::class,'register']);
+Route::post('auth/login',[UserController::class,'login']);
 
+});
