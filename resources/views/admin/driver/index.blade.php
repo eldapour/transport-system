@@ -70,10 +70,10 @@
 
         <!-- Create Or Edit Modal -->
         <div class="modal fade" id="editOrCreate" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="example-Modal3">بيانات </h5>
+                        <h5 class="modal-title" id="example-Modal3">بيانات السائق</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -104,6 +104,12 @@
         showData('{{route('driver.index')}}', columns);
         // Delete Using Ajax
         deleteScript('{{route('driver_delete')}}');
+        // Add Using Ajax
+        showAddModal('{{route('driver.create')}}');
+        addScript();
+        // Add Using Ajax
+        showEditModal('{{route('driver.edit',':id')}}');
+        editScript();
     </script>
 @endsection
 
