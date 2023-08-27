@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Interfaces\AdminInterface;
+use App\Interfaces\Api\UserRepositoryInterface;
+use App\Repository\Api\UserRepository as UserApiRepository;
 use App\Interfaces\AuthInterface;
 use App\Interfaces\DriverInterface;
 use App\Interfaces\UserInterface;
@@ -25,6 +27,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AdminInterface::class,AdminRepository::class);
         $this->app->bind(DriverInterface::class,DriverRepository::class);
         $this->app->bind(AuthInterface::class,AuthRepository::class);
+
+
+        //start Api classes and interfaces
+        $this->app->bind(UserRepositoryInterface::class,UserApiRepository::class);
+
     }
 
     /**

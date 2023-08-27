@@ -14,13 +14,13 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->longText('image');
-            $table->bigInteger('from_warehouse');
-            $table->bigInteger('to_warehouse');
-            $table->bigInteger('weight');
-            $table->bigInteger('qty');
+            $table->unsignedBigInteger('from_warehouse');
+            $table->unsignedBigInteger('to_warehouse');
+            $table->unsignedBigInteger('weight');
+            $table->unsignedBigInteger('qty');
             $table->double('value','10,2');
             $table->text('type');
             $table->enum('status',['hanging','waiting','complete']);

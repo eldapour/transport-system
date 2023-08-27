@@ -25,7 +25,8 @@ class UserSeeder extends Seeder
                 'image' => 'uploads/users/avatar.png',
                 'phone' => '965433433',
                 'city_id' => 1,
-                'type' => 'person',
+                'type' => 'user',
+                'user_type' => 'person',
                 'status' => 1,
                 'created_at' => Carbon::now()
             ],
@@ -38,6 +39,7 @@ class UserSeeder extends Seeder
                 'phone' => '9654334666',
                 'city_id' => 1,
                 'type' => 'driver',
+                'user_type' => null,
                 'status' => 1,
                 'created_at' => Carbon::now()
 
@@ -50,7 +52,8 @@ class UserSeeder extends Seeder
                 'image' => 'uploads/users/avatar.png',
                 'phone' => '965433422666',
                 'city_id' => 1,
-                'type' => 'company',
+                'type' => 'user',
+                'user_type' => 'company',
                 'status' => 1,
                 'created_at' => Carbon::now()
 

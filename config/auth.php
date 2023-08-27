@@ -48,6 +48,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        //start guard api
+        'user-api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
     ],
 
     /*
