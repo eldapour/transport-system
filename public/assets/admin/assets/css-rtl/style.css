@@ -25051,3 +25051,6 @@ a.text-dark:hover, a.text-dark:focus {
   width: 6rem !important; }
 
 /*# sourceMappingURL=style.css.map */
+.custom-border {
+    border: 1px dashed rgb(0 0 0 / 36%);
+}

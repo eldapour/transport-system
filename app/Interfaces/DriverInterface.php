@@ -2,6 +2,8 @@
 
 namespace App\Interfaces;
 
+use App\Http\Requests\UserRequest;
+
 Interface DriverInterface {
 
     public function index($request);
@@ -14,6 +16,6 @@ Interface DriverInterface {
 
     public function edit($driver);
 
-    public function update( $request, $id);
+    public function update(UserRequest $request, $id);
 
 }

@@ -14,6 +14,10 @@ Route::group(['prefix'=>'admin'],function (){
     Route::POST('login', [AuthController::class,'login'])->name('admin.login');
 });
 
+Route::get('/', function () {
+   return redirect()->route('adminHome');
+});
+
 Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::get('/', function () {
         return view('admin/index');

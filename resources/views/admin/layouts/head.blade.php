@@ -12,7 +12,7 @@
 <link href="{{asset('assets/admin')}}/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
 <!-- STYLE CSS *** remove rtl to switch *** -->
-<link href="{{asset('assets/admin')}}/assets/css-rtl/style.css" rel="stylesheet"/>
+<link href="{{asset('assets/admin/assets/css-rtl/style.css')}}" rel="stylesheet"/>
 <link href="{{asset('assets/admin')}}/assets/css-rtl/skin-modes.css" rel="stylesheet"/>
 <link href="{{asset('assets/admin')}}/assets/css-rtl/dark-style.css" rel="stylesheet"/>
 
@@ -52,4 +52,9 @@
 <script defer src="{{asset('assets/admin')}}/assets/iconfonts/font-awesome/js/solid.js"></script>
 <script defer src="{{asset('assets/admin')}}/assets/iconfonts/font-awesome/js/fontawesome.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" rel="stylesheet" />
+
+
+
+<link href="{{ asset('assets/admin/assets/css/select2.min.css') }}" rel="stylesheet"/>
+
 @yield('css')
