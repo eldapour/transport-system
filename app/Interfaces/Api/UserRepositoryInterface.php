@@ -13,6 +13,8 @@ interface UserRepositoryInterface{
     public function login(Request $request);
     public function getProfile(Request $request): JsonResponse;
     public function updateProfile(Request $request): JsonResponse;
+    public function changePassword(Request $request): JsonResponse;
     public function logout(): JsonResponse;
+    public function deleteAccount(): JsonResponse;
 
 }
