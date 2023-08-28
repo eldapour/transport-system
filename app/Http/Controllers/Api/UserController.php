@@ -49,11 +49,23 @@ class UserController extends Controller{
 
     }
 
+    public function changePassword(Request $request): JsonResponse{
+
+        return $this->userRepositoryInterface->changePassword($request);
+
+    }
+
 
     public function logout(): JsonResponse
     {
 
        return $this->userRepositoryInterface->logout();
+    }
+
+    public function deleteAccount(): JsonResponse
+    {
+
+        return $this->userRepositoryInterface->deleteAccount();
     }
 
 

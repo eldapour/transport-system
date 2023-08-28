@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
 class UserRepository extends ResponseApi implements UserRepositoryInterface{
 
 
@@ -60,7 +61,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                     ];
 
                     $code = collect($validator->errors())->flatten(1)[0];
-                    return self::returnResponseDataApi( $errors_arr[$errors] ?? 500, $code,200);
+                    return self::returnResponseDataApi(null, $errors_arr[$errors] ?? 500, $code);
                 }
                 return self::returnResponseDataApi(null,$validator->errors()->first(),422);
             }
@@ -107,6 +108,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
             ];
             $validator = Validator::make($request->all(), $rules, [
                 'email.exists' => 409,
+                'type.in' => 410,
             ]);
 
             if ($validator->fails()) {
@@ -116,6 +118,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
 
                     $errors_arr = [
                         409 => 'Failed,Email not exists',
+                        410 => 'Failed,The type must be an user or driver',
                     ];
 
                     $code = collect($validator->errors())->flatten(1)[0];
@@ -124,9 +127,9 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                 return self::returnResponseDataApi(null,$validator->errors()->first(),422,422);
             }
 
-            $token = Auth::guard('user-api')->attempt($request->only(['email', 'password']));
+            $token = Auth::guard('user-api')->attempt($request->only(['email', 'password','type']));
             if (!$token) {
-                return self::returnResponseDataApi(null, "كلمه المرور خطاء يرجي المحاوله مره اخري", 403,403);
+                return self::returnResponseDataApi(null, "يانات الدخول غير صحيحه برجاء المحاوله مره اخري", 403,403);
             }
             $user = Auth::guard('user-api')->user();
             $user['token'] = $token;
@@ -155,14 +158,72 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
         }
     }
 
+    public function changePassword(Request $request): JsonResponse
+    {
+
+        try {
+
+            $rules = [
+                'current_password' => 'required|min:6',
+                'new_password' => 'required|min:6|confirmed',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, [
+                'new_password.confirmed' => 406,
+            ]);
+
+            if ($validator->fails()) {
+                $errors = collect($validator->errors())->flatten(1)[0];
+
+                if (is_numeric($errors)) {
+                    $errors_arr = [
+                        406 => 'Failed,The new password not confirmed',
+                    ];
+
+                    $code = collect($validator->errors())->flatten(1)[0];
+                    return self::returnResponseDataApi( $errors_arr[$errors] ?? 500, $code,200);
+                }
+                return self::returnResponseDataApi(null,$validator->errors()->first(),422);
+            }
+
+            $user = Auth::guard('user-api')->user();
+
+            if (Hash::check($request->current_password,$user->password)) {
+
+                $user->update(['password' => Hash::make($request->new_password)]);
+
+                if (isset($user)) {
+
+                    $user->token = $request->bearerToken();
+                    return self::returnResponseDataApi(new UserResource($user), "تم تغيير كلمه المرور بنجاح", 200);
+
+                }else{
+
+                    return self::returnResponseDataApi(null,"يوجد مشكله اثناء تغيير كلمه المرور",500,500);
+                }
+            } else {
+
+                return self::returnResponseDataApi(null,"كلمه المرور القديمه غير صحيحه برجاء كتابه كلمه السر صحيحه لمتابعه التغيير",403,403);
+
+            }
+
+
+        } catch (\Exception $exception) {
+
+            return self::returnResponseDataApi($exception->getMessage(),500,false,500);
+        }
+
+    }
+
 
     public function updateProfile(Request $request): JsonResponse
     {
         try {
 
+
             $rules = [
                 'name' => 'required|string|max:50',
-                'email' => 'required|email|unique:users,email,'.Auth::guard('user-api')->id(),
+                'email' => 'required|email|unique:users,email,' . Auth::guard('user-api')->id(),
                 'phone' => 'required|numeric',
                 'image' => 'nullable|mimes:jpg,png,jpeg',
                 'city_id' => 'required|exists:cities,id',
@@ -184,7 +245,8 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                     ];
 
                     $code = collect($validator->errors())->flatten(1)[0];
-                    return self::returnResponseDataApi( $errors_arr[$errors] ?? 500, $code,200);
+                    return self::returnResponseDataApi(null, $errors_arr[$errors] ?? 500, $code);
+
                 }
                 return self::returnResponseDataApi(null,$validator->errors()->first(),422);
             }
@@ -229,6 +291,30 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
         try {
             Auth::guard('user-api')->logout();
             return self::returnResponseDataApi(null,"تم تسجيل الخروج بنجاح",200);
+
+        } catch (\Exception $exception) {
+
+            return self::returnResponseDataApi(null,$exception->getMessage(),500,500);
+        }
+    }
+
+
+    public function deleteAccount(): JsonResponse
+    {
+
+        try {
+
+            $user = Auth::guard('user-api')->user();
+            if($user->type == 'driver'){
+
+                return self::returnResponseDataApi(null,"حساب السائق غير مصرح له بالحذف",403,403);
+
+            }else{
+                $user->delete();
+                Auth::guard('user-api')->logout();
+                return self::returnResponseDataApi(null,"تم حذف الحساب بنجاح وتم تسجيل الخروج من التطبيق",200);
+            }
+
 
         } catch (\Exception $exception) {
 
