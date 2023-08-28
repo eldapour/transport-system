@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ResetPassword\ForgotPasswordController;
 use App\Http\Controllers\Api\ResetPassword\ResetPasswordController;
 use App\Http\Controllers\Api\UserController;
@@ -26,6 +27,18 @@ Route::group(['middleware' => 'check-lang'], function (){
     Route::post('logout',[UserController::class,'logout']);
     Route::post('changePassword',[UserController::class,'changePassword']);
     Route::post('deleteAccount',[UserController::class,'deleteAccount']);
+
+    });
+
+
+
+    Route::group(['prefix' => 'orders','middleware' => 'jwt'], function () {
+
+        Route::get('getAllPlaces',[OrderController::class,'getAllPlaces']);
+        Route::get('ordersCompleted',[OrderController::class,'ordersCompleted']);
+        Route::get('ordersNotCompleted',[OrderController::class,'ordersNotCompleted']);
+        Route::post('addNewOrder',[OrderController::class,'addNewOrder']);
+
 
     });
 

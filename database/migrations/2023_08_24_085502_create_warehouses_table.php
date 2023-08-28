@@ -22,7 +22,6 @@ class CreateWarehousesTable extends Migration
             $table->unsignedBigInteger('city_id')->comment('مكان المخزن');
             $table->text('lan');
             $table->text('lat');
-
             $table->foreign('city_id')->references('id')->on('cities')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
