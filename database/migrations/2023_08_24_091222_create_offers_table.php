@@ -20,17 +20,10 @@ class CreateOffersTable extends Migration
             $table->unsignedBigInteger('order_id');
             $table->dateTime('date');
             $table->double('price','10,2');
-            $table->boolean('status')
-                ->default(false)->comment('1 => accepted, 0 => rejected');
-            $table->foreign('user_id')
-                ->on('users')
-                ->references('id')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('driver_id')
-                ->on('users')
-                ->references('id')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('order_id')
-                ->on('orders')
-                ->references('id')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->boolean('status')->default(false)->comment('1 => accepted, 0 => rejected');
+            $table->foreign('user_id')->on('users')->references('id')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('driver_id')->on('users')->references('id')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('order_id')->on('orders')->references('id')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

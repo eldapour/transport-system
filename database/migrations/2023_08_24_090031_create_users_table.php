@@ -25,12 +25,7 @@ class CreateUsersTable extends Migration
             $table->enum('type', ['driver', 'user']);
             $table->enum('user_type', ['person','company'])->nullable();
             $table->boolean('status')->default(true);
-
-            $table->foreign('city_id')
-                ->on('cities')
-                ->references('id')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+            $table->foreign('city_id')->on('cities')->references('id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

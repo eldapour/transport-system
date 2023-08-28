@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api\ResetPassword;
 use App\Http\Controllers\Controller;
 use App\Models\ResetCodePassword;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ForgotPasswordController extends Controller{
 
-    public function checkPhone(Request $request)
+    public function checkPhone(Request $request): JsonResponse
     {
 
         $rules = [
@@ -36,7 +37,7 @@ class ForgotPasswordController extends Controller{
         ResetCodePassword::query()->where('phone', $request->phone)
             ->delete();
 
-        $codeData = ResetCodePassword::create(['phone' => $request->phone]);
+        ResetCodePassword::create(['phone' => $request->phone]);
 
         return self::returnResponseDataApi(null,"The phone is exists",200);
 

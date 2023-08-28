@@ -45,14 +45,11 @@ class ResetPasswordController extends Controller{
             return response(['message' => "The reset is expired"], 422);
         }
 
-
         $user = User::query()->where('phone',$passwordReset->phone)->first();
-
 
         $user->update([
             'password' => Hash::make($request->password)
         ]);
-
 
         $passwordReset->delete();
         return self::returnResponseDataApi(null,"password has been successfully reset",200);
