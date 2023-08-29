@@ -11,7 +11,7 @@ class AuthRepository implements AuthInterface
         if (Auth::guard('admin')->check()){
             return redirect('admin');
         }
-        return view('Admin.auth.login');
+        return view('admin.auth.login');
     }
 
     public function login($request): \Illuminate\Http\JsonResponse
