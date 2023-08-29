@@ -5,16 +5,26 @@ namespace App\Providers;
 use App\Interfaces\AdminInterface;
 use App\Interfaces\Api\OrderRepositoryInterface;
 use App\Interfaces\Api\UserRepositoryInterface;
-use App\Repository\Api\OrderRepository;
-use App\Repository\Api\UserRepository as UserApiRepository;
+use App\Interfaces\CityInterface;
+use App\Interfaces\OrderInterface;
+use App\Interfaces\WarehouseInterface;
 use App\Interfaces\AuthInterface;
 use App\Interfaces\DriverInterface;
 use App\Interfaces\UserInterface;
+
+use App\Repository\Api\OrderRepository as OrderApiRepository;
+use App\Repository\Api\UserRepository as UserApiRepository;
+
 use App\Repository\AdminRepository;
 use App\Repository\AuthRepository;
+use App\Repository\CityRepository;
 use App\Repository\DriverRepository;
+use App\Repository\OrderRepository;
 use App\Repository\UserRepository;
+use App\Repository\WarehouseRepository;
+
 use Illuminate\Support\ServiceProvider;
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -25,15 +35,23 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(UserInterface::class,UserRepository::class);
-        $this->app->bind(AdminInterface::class,AdminRepository::class);
-        $this->app->bind(DriverInterface::class,DriverRepository::class);
+        // start Web classes and interfaces
         $this->app->bind(AuthInterface::class,AuthRepository::class);
+        $this->app->bind(AdminInterface::class,AdminRepository::class);
+        $this->app->bind(UserInterface::class,UserRepository::class);
+        $this->app->bind(DriverInterface::class,DriverRepository::class);
+        $this->app->bind(CityInterface::class,CityRepository::class);
+        $this->app->bind(WarehouseInterface::class,WarehouseRepository::class);
+        $this->app->bind(OrderInterface::class,OrderRepository::class);
+
+        // ----------------------------------------------------------------
 
 
-        //start Api classes and interfaces
+
+        // start Api classes and interfaces
         $this->app->bind(UserRepositoryInterface::class,UserApiRepository::class);
-        $this->app->bind(OrderRepositoryInterface::class,OrderRepository::class);
+        $this->app->bind(OrderRepositoryInterface::class,OrderApiRepository::class);
+        // ----------------------------------------------------------------
 
     }
 
