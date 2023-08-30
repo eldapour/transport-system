@@ -94,13 +94,6 @@
       'LaravelLocalization' => 'Mcamara\\LaravelLocalization\\Facades\\LaravelLocalization',
     ),
   ),
-  'michael-rubel/laravel-auto-binder' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'MichaelRubel\\AutoBinder\\BindingServiceProvider',
-    ),
-  ),
   'nesbot/carbon' => 
   array (
     'providers' => 
