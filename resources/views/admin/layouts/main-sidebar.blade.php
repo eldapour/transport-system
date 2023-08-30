@@ -37,10 +37,40 @@
 
         <li class="slide">
             <a class="side-menu__item" href="{{route('driver.index')}}">
-                <i class="fa fa-users side-menu__icon"></i>
+                <i class="fa fa-car side-menu__icon"></i>
                 <span class="side-menu__label">السائقين</span>
             </a>
         </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('city.index')}}">
+                <i class="fa fa-city side-menu__icon"></i>
+                <span class="side-menu__label">المدن</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('warehouse.index')}}">
+                <i class="fa fa-warehouse side-menu__icon"></i>
+                <span class="side-menu__label">المخازن</span>
+            </a>
+        </li>
+
+
+        <li class="slide">
+            <a class="side-menu__item" data-toggle="slide" href="#">
+                <i class="fa fa-truck side-menu__icon"></i>
+                <span class="side-menu__label">الطلبات</span><i class="angle fa fa-angle-left"></i>
+            </a>
+            <ul class="slide-menu">
+
+                <li><a href="{{ route('orderNew') }}" class="slide-item">الجديدة</a></li>
+                <li><a href="{{ route('orderWaiting') }}" class="slide-item">في الانتظار</a></li>
+                <li><a href="{{ route('orderComplete') }}" class="slide-item">المكتملة</a></li>
+
+            </ul>
+        </li>
+
 
         <li class="slide">
             <a class="side-menu__item" href="{{route('admin.logout')}}">

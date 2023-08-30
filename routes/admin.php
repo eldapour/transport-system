@@ -3,9 +3,12 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DriverController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WarehouseController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -23,26 +26,33 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
         return view('admin/index');
     })->name('adminHome');
 
-    #=======================================================================
     #============================ Admin ====================================
-    #=======================================================================
     Route::resource('admins', AdminController::class);
     Route::POST('delete_admin',[AdminController::class,'delete'])->name('delete_admin');
     Route::get('my_profile',[AdminController::class,'myProfile'])->name('myProfile');
     Route::get('logout', [AuthController::class,'logout'])->name('admin.logout');
 
-    #=======================================================================
     #============================ users ====================================
-    #=======================================================================
     Route::get('userPerson',[UserController::class,'indexPerson'])->name('userPerson.index');
     Route::get('userCompany',[UserController::class,'indexCompany'])->name('userCompany.index');
     Route::POST('user/delete',[UserController::class,'delete'])->name('user_delete');
 
-    #=======================================================================
-    #============================ driver ====================================
-    #=======================================================================
+    #============================ driver ===================================
     Route::resource('driver',DriverController::class);
     Route::POST('driver/delete',[UserController::class,'delete'])->name('driver_delete');
+
+    #============================ city =====================================
+    Route::resource('city',CityController::class);
+    Route::POST('city/delete',[CityController::class,'delete'])->name('city_delete');
+
+    #============================ warehouse ================================
+    Route::resource('warehouse',WarehouseController::class);
+    Route::POST('warehouse/delete',[WarehouseController::class,'delete'])->name('warehouse_delete');
+
+    #============================ warehouse ================================
+    Route::get('orderComplete',[OrderController::class,'complete'])->name('orderComplete');
+    Route::get('orderNew',[OrderController::class,'new'])->name('orderNew');
+    Route::get('orderWaiting',[OrderController::class,'waiting'])->name('orderWaiting');
 
 
 
@@ -52,7 +62,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
 
 
 #=======================================================================
-#============================ root =====================================
+#============================ ROOT =====================================
 #=======================================================================
 Route::get('/clear', function () {
     Artisan::call('cache:clear');

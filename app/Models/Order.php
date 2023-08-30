@@ -24,6 +24,16 @@ class Order extends Model
     ];
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(Offer::class,'order_id','id');
+    }
+
     public function from_warehouse_place(): BelongsTo{
 
         return $this->belongsTo(Warehouse::class,'from_warehouse','id');
