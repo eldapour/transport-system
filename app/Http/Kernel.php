@@ -57,6 +57,8 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'jwt' => \App\Http\Middleware\JwtMiddleware::class,
         'check-lang' => \App\Http\Middleware\ChangeLanguageApi::class,
+        'check-auth-type' => \App\Http\Middleware\CheckUserTypeAuthenticateApi::class,
+        'check-client-auth' => \App\Http\Middleware\CheckClientAuthenticateApi::class,
 
         'admin' => \App\Http\Middleware\Custom\Admin::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
