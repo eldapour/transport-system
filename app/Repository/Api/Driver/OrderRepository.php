@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Repository\Api\Driver;
-
 use App\Http\Resources\OrderDriverDetailResource;
 use App\Http\Resources\OrderResource;
 use App\Interfaces\Api\Driver\OrderRepositoryInterface;
@@ -30,11 +29,25 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
             ->where('status','=','waiting')
             ->get();
 
+        if(request('search') == 'hanging'){
 
-          $data['allOfOrdersHanging'] = OrderResource::collection($allOfOrdersHanging);
-          $data['ordersOfDriverWaiting'] = OrderResource::collection( $ordersOfDriverWaiting);
+            $data['allOfOrdersHanging'] = OrderResource::collection($allOfOrdersHanging);
+            return self::returnResponseDataApi($data,"تم الحصول علي جميع الطلبيات المعلقه",200);
 
-        return self::returnResponseDataApi($data,"تم الحصول علي جميع الطلبات المعلقه وطلبات انتظار الدفع",200);
+
+        }elseif (request('search') == 'waiting'){
+
+            $data['ordersOfDriverWaiting'] = OrderResource::collection( $ordersOfDriverWaiting);
+
+            return self::returnResponseDataApi($data,"تم الحصول علي جميع طلبيات انتظار الدفع",200);
+
+        }else{
+
+            $data['allOfOrdersHanging'] = OrderResource::collection($allOfOrdersHanging);
+            $data['ordersOfDriverWaiting'] = OrderResource::collection( $ordersOfDriverWaiting);
+
+            return self::returnResponseDataApi($data,"تم الحصول علي جميع الطلبات المعلقه وطلبات انتظار الدفع",200);
+        }
 
     }
 

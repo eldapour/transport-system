@@ -27,6 +27,10 @@ class OrderDriverDetailResource extends JsonResource
             'value' => $this->value,
             'type' => $this->type,
             'description' => $this->description,
+            'arrival-information' => $this->status == 'waiting' ? null : [
+                'price' => $this->offer->price,
+                'date-arrival' => $this->offer->date,
+            ],
             'created_at' => $this->created_at->format('Y-m-d'),
             'updated_at' => $this->created_at->format('Y-m-d'),
 
