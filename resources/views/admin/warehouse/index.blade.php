@@ -92,7 +92,7 @@
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
         showData('{{route('warehouse.index')}}', columns);
-        // Delete Using Ajax
+        // Delete Use Ajax
         deleteScript('{{route('warehouse_delete')}}');
         // Add Using Ajax
         showAddModal('{{route('warehouse.create')}}');
