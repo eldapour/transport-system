@@ -16,8 +16,7 @@ class CityResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name_ar' => $this->name_ar,
-            'name_en' => $this->name_en,
+            'name' => lang() == 'ar' ? $this->name_ar : $this->name_en,
         ];
     }
 }
