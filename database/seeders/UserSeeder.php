@@ -57,6 +57,20 @@ class UserSeeder extends Seeder
                 'status' => 1,
                 'created_at' => Carbon::now()
 
+            ],
+            [
+                'name' => 'Client',
+                'email' => 'eslamana888@gmail.com',
+                'password' => Hash::make('123456'),
+                'national_id' => 6620098763,
+                'image' => 'uploads/users/avatar.png',
+                'phone' => '01062933188',
+                'city_id' => 1,
+                'type' => 'user',
+                'user_type' => 'company',
+                'status' => 1,
+                'created_at' => Carbon::now()
+
             ]
         ];
         DB::table('users')->insert($data);
