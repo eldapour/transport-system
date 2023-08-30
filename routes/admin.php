@@ -53,6 +53,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::get('orderComplete',[OrderController::class,'complete'])->name('orderComplete');
     Route::get('orderNew',[OrderController::class,'new'])->name('orderNew');
     Route::get('orderWaiting',[OrderController::class,'waiting'])->name('orderWaiting');
+    Route::get('orderShow/{order}',[OrderController::class,'show'])->name('orderShow');
 
 
 

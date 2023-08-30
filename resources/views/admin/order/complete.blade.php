@@ -97,8 +97,8 @@
         ]
         showData('{{route('orderComplete')}}', columns);
 
-        {{--showEditModal('{{route('warehouse.edit',':id')}}');--}}
-        {{--editScript();--}}
+        showEditModal('{{route('orderShow',':id')}}');
+        editScript();
     </script>
 @endsection
 

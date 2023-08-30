@@ -9,4 +9,5 @@ Interface OrderInterface {
     public function waiting($request);
 
     public function new($request);
+    public function show($order);
 }

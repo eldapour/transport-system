@@ -22,8 +22,10 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">اسم المخزن</th>
-                                <th class="min-w-50px">المدينة</th>
+                                <th class="min-w-50px">الصورة</th>
+                                <th class="min-w-50px">اسم العميل (ID)</th>
+                                <th class="min-w-50px">من مخزن</th>
+                                <th class="min-w-50px">الي مخزن</th>
                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
@@ -83,18 +85,15 @@
     <script>
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'name_ar', name: 'name_ar'},
-            {data: 'city_id', name: 'city_id'},
+            {data: 'image', name: 'image'},
+            {data: 'user_id', name: 'user_id'},
+            {data: 'from_warehouse', name: 'from_warehouse'},
+            {data: 'to_warehouse', name: 'to_warehouse'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('warehouse.index')}}', columns);
-        // Delete Using Ajax
-        deleteScript('{{route('warehouse_delete')}}');
-        // Add Using Ajax
-        showAddModal('{{route('warehouse.create')}}');
-        addScript();
-        // Add Using Ajax
-        showEditModal('{{route('warehouse.edit',':id')}}');
+        showData('{{route('orderNew')}}', columns);
+
+        showEditModal('{{route('orderShow',':id')}}');
         editScript();
     </script>
 @endsection
