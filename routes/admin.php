@@ -9,8 +9,8 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WarehouseController;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'admin'],function (){
     Route::get('login', [AuthController::class,'index'])->name('admin.login');
@@ -68,10 +68,9 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
 Route::get('/clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('key:generate');
-    Artisan::call('jwt:secret');
     Artisan::call('config:clear');
     Artisan::call('optimize:clear');
-    return response()->json('success',100000000000000);
+    return response()->json(['status' => 'success','code' =>1000000000]);
 });
 
 
