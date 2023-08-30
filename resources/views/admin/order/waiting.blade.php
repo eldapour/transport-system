@@ -1,16 +1,18 @@
 @extends('admin/layouts/master')
 
 @section('title')
-    {{($setting->name_en) ?? ''}} | الطلبات في الانتظار
+    {{($setting->name_en) ?? ''}} | الطلبات في انتظار الدفع
 @endsection
-@section('page_name') الطلبات في الانتظار     @endsection
+@section('page_name')
+    الطلبات في انتظار الدفع
+@endsection
 @section('content')
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> طلبات في الانتظار {{($setting->name_en) ?? ''}}</h3>
+                    <h3 class="card-title"> طلبات في انتظار الدفع {{($setting->name_en) ?? ''}}</h3>
                     <div class="">
 
                     </div>
@@ -22,8 +24,10 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">اسم المخزن</th>
-                                <th class="min-w-50px">المدينة</th>
+                                <th class="min-w-50px">الصورة</th>
+                                <th class="min-w-50px">اسم العميل (ID)</th>
+                                <th class="min-w-50px">من مخزن</th>
+                                <th class="min-w-50px">الي مخزن</th>
                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
@@ -83,18 +87,15 @@
     <script>
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'name_ar', name: 'name_ar'},
-            {data: 'city_id', name: 'city_id'},
+            {data: 'image', name: 'image'},
+            {data: 'user_id', name: 'user_id'},
+            {data: 'from_warehouse', name: 'from_warehouse'},
+            {data: 'to_warehouse', name: 'to_warehouse'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('warehouse.index')}}', columns);
-        // Delete Using Ajax
-        deleteScript('{{route('warehouse_delete')}}');
-        // Add Using Ajax
-        showAddModal('{{route('warehouse.create')}}');
-        addScript();
-        // Add Using Ajax
-        showEditModal('{{route('warehouse.edit',':id')}}');
+        showData('{{route('orderWaiting')}}', columns);
+
+        showEditModal('{{route('orderShow',':id')}}');
         editScript();
     </script>
 @endsection

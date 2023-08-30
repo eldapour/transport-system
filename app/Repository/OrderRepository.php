@@ -18,7 +18,7 @@ class OrderRepository implements OrderInterface
             return DataTables::of($order)
                 ->addColumn('action', function ($order) {
                     return '
-                            <button type="button" data-id="' . $order->id . '" class="btn btn-pill btn-success editBtn"><i class="fa fa-eye"></i></button>
+                            <button type="button" data-id="' . $order->id . '" class="btn btn-pill btn-success editBtn"><i class="fa fa-eye"></i> عرض</button>
                        ';
                 })
                 ->editColumn('image', function ($order) {
@@ -52,19 +52,28 @@ class OrderRepository implements OrderInterface
     public function waiting($request)
     {
         if ($request->ajax()) {
-            $order = Order::query()->latest()->get();
+            $order = Order::query()
+                ->where('status','=','waiting')
+                ->latest()->get();
             return DataTables::of($order)
                 ->addColumn('action', function ($order) {
                     return '
-                            <button type="button" data-id="' . $order->id . '" class="btn btn-pill btn-info-light editBtn"><i class="fa fa-edit"></i></button>
-                            <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
-                                    data-id="' . $order->id . '" data-title="' . $order->description . '">
-                                    <i class="fas fa-trash"></i>
-                            </button>
+                            <button type="button" data-id="' . $order->id . '" class="btn btn-pill btn-success editBtn"><i class="fa fa-eye"></i> عرض</button>
                        ';
                 })
-                ->editColumn('city_id', function ($order) {
-                    return $order->city->name_ar;
+                ->editColumn('image', function ($order) {
+                    return '
+                    <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="' . asset($order->image) . '">
+                    ';
+                })
+                ->editColumn('user_id', function ($order) {
+                    return $order->user->name .' ( '.$order->user->id.' ) ';
+                })
+                ->editColumn('from_warehouse', function ($order) {
+                    return $order->from_warehouse_place->name_ar;
+                })
+                ->editColumn('to_warehouse', function ($order) {
+                    return $order->to_warehouse_place->name_ar;
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -76,24 +85,46 @@ class OrderRepository implements OrderInterface
     public function new($request)
     {
         if ($request->ajax()) {
-            $order = Order::query()->latest()->get();
+            $order = Order::query()
+                ->where('status','=','hanging')
+                ->latest()->get();
             return DataTables::of($order)
                 ->addColumn('action', function ($order) {
                     return '
-                            <button type="button" data-id="' . $order->id . '" class="btn btn-pill btn-info-light editBtn"><i class="fa fa-edit"></i></button>
-                            <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
-                                    data-id="' . $order->id . '" data-title="' . $order->description . '">
-                                    <i class="fas fa-trash"></i>
-                            </button>
+                            <button type="button" data-id="' . $order->id . '" class="btn btn-pill btn-success editBtn"><i class="fa fa-eye"></i> عرض</button>
                        ';
                 })
-                ->editColumn('city_id', function ($order) {
-                    return $order->city->name_ar;
+                ->editColumn('image', function ($order) {
+                    return '
+                    <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="' . asset($order->image) . '">
+                    ';
+                })
+                ->editColumn('user_id', function ($order) {
+                    return $order->user->name .' ( '.$order->user->id.' ) ';
+                })
+                ->editColumn('from_warehouse', function ($order) {
+                    return $order->from_warehouse_place->name_ar;
+                })
+                ->editColumn('to_warehouse', function ($order) {
+                    return $order->to_warehouse_place->name_ar;
                 })
                 ->escapeColumns([])
                 ->make(true);
         } else {
             return view('admin.order.new');
         }
+    }
+
+    public function show($order)
+    {
+        $offer = Offer::query()
+            ->where('order_id',$order)
+            ->with('order')
+            ->first();
+        if (!$offer){
+            $offer = Order::query()
+            ->find($order);
+        }
+        return view('admin.order.parts.show',compact('offer'));
     }
 }

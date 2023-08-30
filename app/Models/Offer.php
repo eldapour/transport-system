@@ -14,4 +14,9 @@ class Offer extends Model
     {
      return $this->belongsTo(User::class,'driver_id','id');
     }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class,'order_id','id');
+    }
 }
