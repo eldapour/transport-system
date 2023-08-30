@@ -2,11 +2,15 @@
 
 namespace App\Repository\Api;
 
+use App\Http\Resources\OrderClientDetailResource;
+use App\Http\Resources\OrderDriverDetailResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\WarehouseResource;
 use App\Interfaces\Api\OrderRepositoryInterface;
+use App\Models\Offer;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\User;
 use App\Models\Warehouse;
 use App\Repository\ResponseApi;
@@ -15,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
@@ -122,6 +127,118 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
             return self::returnResponseDataApi($exception->getMessage(),500,false,500);
         }
+
+    }
+
+    public function orderDetail($id): JsonResponse
+    {
+
+        $order = Order::query()
+            ->where('id','=',$id)
+            ->first();
+
+        if(!$order){
+            return self::returnResponseDataApi(null,"الطلب غير موجود",404,404);
+
+        }else{
+
+            if($order->user_id != Auth::guard('user-api')->id()){
+
+                return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
+
+
+            }else{
+
+                return self::returnResponseDataApi(new OrderClientDetailResource($order),"تم الحصول علي تفاصيل الطلب بنجاح",200);
+            }
+        }
+
+    }
+
+
+    public function addPaymentForOrder(Request $request,$id): JsonResponse
+    {
+
+        try {
+
+
+        $order = Order::query()
+            ->where('id','=',$id)
+            ->first();
+
+        if(!$order){
+            return self::returnResponseDataApi(null,"الطلب غير موجود",404,404);
+
+        }else{
+
+            if($order->user_id != Auth::guard('user-api')->id()){
+
+                return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
+
+
+            }else{
+
+                $rules = [
+
+                    'currency' => 'required',
+                    'amount' => 'required|numeric',
+                ];
+
+                $validator = Validator::make($request->all(), $rules, [
+                    'amount.numeric' => 406,
+                ]);
+
+                if ($validator->fails()) {
+                    $errors = collect($validator->errors())->flatten(1)[0];
+
+                    if (is_numeric($errors)) {
+                        $errors_arr = [
+                            406 => 'Failed,The amount must be a numeric',
+                        ];
+
+                        $code = collect($validator->errors())->flatten(1)[0];
+                        return self::returnResponseDataApi(null, $errors_arr[$errors] ?? 500, $code);
+                    }
+                    return self::returnResponseDataApi(null,$validator->errors()->first(),422);
+                }
+
+                $checkPaymentCreated = Payment::query()
+                    ->where('user_id','=',Auth::guard('user-api')->id())
+                    ->where('order_id','=',$order->id)
+                    ->first();
+
+                if(!$checkPaymentCreated){
+
+                    Payment::create([
+                        'payment_id' => '#FGDSJDJ541'.Str::slug(100),
+                        'user_id' => Auth::guard('user-api')->id(),
+                        'order_id' => $order->id,
+                        'currency' => $request->currency,
+                        'amount' => $request->amount,
+                        'status' => 'approved'
+                    ]);
+
+                    $offer = Offer::query()
+                        ->where('user_id','=',Auth::guard('user-api')->id())
+                        ->where('order_id','=',$order->id)
+                        ->first();
+
+                    $offer->update(['status' => 1]);
+                    $order->update(['status' => 'complete']);
+
+                    return self::returnResponseDataApi(new OrderClientDetailResource($order),"تم عمليه الدفع بنجاح لهذا الطلب",200);
+                }else{
+
+                    return self::returnResponseDataApi(new OrderClientDetailResource($order),"تم الدفع من قبل لهذا الطلب",201,201);
+                }
+
+            }
+        }
+        } catch (\Exception $exception) {
+
+            return self::returnResponseDataApi($exception->getMessage(),500,false,500);
+        }
+
 
     }
 }

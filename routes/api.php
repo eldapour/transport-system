@@ -32,12 +32,14 @@ Route::group(['middleware' => 'check-lang'], function (){
 
 
 
-    Route::group(['prefix' => 'orders','middleware' => 'jwt'], function () {
+    Route::group(['prefix' => 'orders','middleware' => ['jwt','check-client-auth']], function () {
 
         Route::get('getAllPlaces',[OrderController::class,'getAllPlaces']);
         Route::get('ordersCompleted',[OrderController::class,'ordersCompleted']);
         Route::get('ordersNotCompleted',[OrderController::class,'ordersNotCompleted']);
         Route::post('addNewOrder',[OrderController::class,'addNewOrder']);
+        Route::get('orderDetail/{id}',[OrderController::class,'orderDetail']);
+        Route::post('addPaymentForOrder/{id}',[OrderController::class,'addPaymentForOrder']);
 
 
     });
@@ -50,5 +52,17 @@ Route::group(['middleware' => 'check-lang'], function (){
     Route::get('cities',[UserController::class,'getAllCities']);
     Route::post('auth/register',[UserController::class,'register']);
     Route::post('auth/login',[UserController::class,'login']);
+
+
+
+    Route::group(['prefix' => 'driver/orders','middleware' => ['jwt','check-auth-type']], function () {
+
+        Route::get('allOrdersOfDriver',[\App\Http\Controllers\Api\Driver\OrderController::class,'allOrdersOfDriver']);
+        Route::get('allOrdersCompletedPayment',[\App\Http\Controllers\Api\Driver\OrderController::class,'allOrdersCompletedPayment']);
+        Route::get('orderDetail/{id}',[\App\Http\Controllers\Api\Driver\OrderController::class,'orderDetail']);
+        Route::post('changeOrderStatus/{id}',[\App\Http\Controllers\Api\Driver\OrderController::class,'changeOrderStatus']);
+
+
+    });
 
 });

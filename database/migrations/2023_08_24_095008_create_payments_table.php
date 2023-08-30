@@ -15,23 +15,15 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('payment_id');
+            $table->text('payment_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('order_id');
-            $table->text('currency');
-            $table->double('amount','10,2');
-            $table->boolean('status');
+            $table->string('currency');
+            $table->double('amount',10,2);
+            $table->enum('status',['approved','failed']);
 
-            $table->foreign('user_id')
-                ->on('users')
-                ->references('id')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-            $table->foreign('order_id')
-                ->on('orders')
-                ->references('id')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+            $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('order_id')->on('orders')->references('id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

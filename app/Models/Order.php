@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -29,7 +30,7 @@ class Order extends Model
         return $this->belongsTo(User::class,'user_id','id');
     }
 
-    public function orderDetails()
+    public function orderDetails(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Offer::class,'order_id','id');
     }
@@ -42,5 +43,10 @@ class Order extends Model
     public function to_warehouse_place(): BelongsTo{
 
         return $this->belongsTo(Warehouse::class,'to_warehouse','id');
+    }
+
+    public function offer(): HasOne{
+
+        return $this->hasOne(Offer::class,'order_id','id');
     }
 }

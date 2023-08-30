@@ -51,6 +51,7 @@ class RepositoryServiceProvider extends ServiceProvider
         // start Api classes and interfaces
         $this->app->bind(UserRepositoryInterface::class,UserApiRepository::class);
         $this->app->bind(OrderRepositoryInterface::class,OrderApiRepository::class);
+        $this->app->bind(\App\Interfaces\Api\Driver\OrderRepositoryInterface::class,\App\Repository\Api\Driver\OrderRepository::class);
         // ----------------------------------------------------------------
 
     }
