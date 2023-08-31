@@ -160,7 +160,7 @@
             <div class="card bg-primary-gradient img-card box-success-shadow">
                 <div class="card-body">
                     <div class="d-flex">
-                        <div class="text-white"><h2 class="mb-0 number-font">{{ \App\Models\Payment::where('status',1)->count() }}</h2>
+                        <div class="text-white"><h2 class="mb-0 number-font">{{ \App\Models\Payment::where('status','approved')->sum('amount') }} $</h2>
                             <p class="text-white mb-0"> عمليات الدفع الناجحة</p></div>
                         <div class="mr-auto">
                             <i class="fe fe-credit-card text-white fs-30 ml-2 mt-2"></i>

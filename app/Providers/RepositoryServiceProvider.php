@@ -7,6 +7,7 @@ use App\Interfaces\Api\OrderRepositoryInterface;
 use App\Interfaces\Api\UserRepositoryInterface;
 use App\Interfaces\CityInterface;
 use App\Interfaces\OrderInterface;
+use App\Interfaces\SettingInterface;
 use App\Interfaces\WarehouseInterface;
 use App\Interfaces\AuthInterface;
 use App\Interfaces\DriverInterface;
@@ -20,6 +21,7 @@ use App\Repository\AuthRepository;
 use App\Repository\CityRepository;
 use App\Repository\DriverRepository;
 use App\Repository\OrderRepository;
+use App\Repository\SettingRepository;
 use App\Repository\UserRepository;
 use App\Repository\WarehouseRepository;
 
@@ -43,6 +45,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CityInterface::class,CityRepository::class);
         $this->app->bind(WarehouseInterface::class,WarehouseRepository::class);
         $this->app->bind(OrderInterface::class,OrderRepository::class);
+        $this->app->bind(SettingInterface::class,SettingRepository::class);
 
         // ----------------------------------------------------------------
 

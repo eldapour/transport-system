@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WarehouseController;
 
@@ -55,6 +56,9 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::get('orderWaiting',[OrderController::class,'waiting'])->name('orderWaiting');
     Route::get('orderShow/{order}',[OrderController::class,'show'])->name('orderShow');
 
+    #============================ warehouse ================================
+    Route::get('setting',[SettingController::class,'index'])->name('settingIndex');
+    Route::POST('setting/update/{id}',[SettingController::class,'update'])->name('settingUpdate');
 
 
 });
