@@ -71,6 +71,12 @@
             </ul>
         </li>
 
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('settingIndex')}}">
+                <i class="fa fa-wrench side-menu__icon"></i>
+                <span class="side-menu__label">الاعدادات</span>
+            </a>
+        </li>
 
         <li class="slide">
             <a class="side-menu__item" href="{{route('admin.logout')}}">

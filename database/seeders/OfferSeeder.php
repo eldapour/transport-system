@@ -20,17 +20,6 @@ class OfferSeeder extends Seeder
             [
                 'user_id' => 2,
                 'driver_id' => 4,
-                'order_id' => 1,
-                'date' => Carbon::now(),
-                'price' => 20,
-                'status' => 0,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-
-            ],
-            [
-                'user_id' => 2,
-                'driver_id' => 4,
                 'order_id' => 2,
                 'date' => Carbon::now(),
                 'price' => 20,

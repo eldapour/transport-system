@@ -10,5 +10,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Setting extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'name_ar',
+        'name_en',
+        'logo',
+        'conditions_ar',
+        'conditions_en',
+        'shipment_price',
+    ];
 }

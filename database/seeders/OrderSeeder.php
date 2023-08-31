@@ -46,7 +46,7 @@ class OrderSeeder extends Seeder
                 'qty' => 20,
                 'type' => 'شحنه زجاج',
                 'value' => 2000.00,
-                'status' => 'hanging',
+                'status' => 'waiting',
                 'description' => 'نقل شحنة زجاج تُعتبر عملية حساسة تتطلب اهتمامًا واعية للتفاصيل وتقنيات متخصصة لضمان وصول الزجاج بسلامة وبدون تلف. إليك وصفًا لعملية نقل شحنة زجاج',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -65,7 +65,7 @@ class OrderSeeder extends Seeder
                 'qty' => 35,
                 'type' => 'شحنه نقل اسماك',
                 'value' => 9000.00,
-                'status' => 'hanging',
+                'status' => 'waiting',
                 'description' => 'نقل شحنة أسماك يُعد عملية حساسة ومعقدة تتطلب اهتمامًا كبيرًا بالصحة والسلامة الغذائية وظروف النقل. إليك وصفًا لعملية نقل شحنة أسماك',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -82,7 +82,7 @@ class OrderSeeder extends Seeder
                 'qty' => 25,
                 'type' => 'شحنه نقل بضائع',
                 'value' => 4000.00,
-                'status' => 'hanging',
+                'status' => 'complete',
                 'description' => 'نقل شحنة بضائع هو عملية متعددة المراحل تتطلب تخطيطًا دقيقًا وتنسيقًا فعالًا لضمان وصول البضائع بأمان وفي حالة جيدة إلى وجهتها. إليك وصفًا لعملية نقل شحنة بضائع',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
