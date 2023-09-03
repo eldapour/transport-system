@@ -58,4 +58,19 @@ class OrderController extends Controller{
        return $this->orderRepositoryInterface->addPaymentForOrder($request,$id);
 
     }
+
+    public function updateOrder(Request $request,$id): JsonResponse
+    {
+
+        return $this->orderRepositoryInterface->updateOrder($request,$id);
+
+    }
+
+
+    public function deleteOrder($id): JsonResponse
+    {
+
+        return $this->orderRepositoryInterface->deleteOrder($id);
+
+    }
 }
