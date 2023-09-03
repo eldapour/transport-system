@@ -12,6 +12,7 @@ class OrderClientDetailResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
     public function toArray($request)
     {
         return [
@@ -25,8 +26,8 @@ class OrderClientDetailResource extends JsonResource
             'quantity' => $this->qty,
             'value' => $this->value,
             'type' => $this->type,
-            'price' => $this->offer->price,
-            'driver' => $this->status == 'waiting' ? null : [
+            'price' => $this->offer->price ?? null,
+            'driver' => $this->status == 'waiting' || $this->status == 'hanging' ? null : [
                'name' => $this->offer->driver->name,
                'date-arrival' => $this->offer->date,
             ],
