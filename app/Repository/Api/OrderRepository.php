@@ -146,7 +146,6 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
                 return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
 
-
             }else{
 
                 return self::returnResponseDataApi(new OrderClientDetailResource($order),"تم الحصول علي تفاصيل الطلب بنجاح",200);
@@ -161,7 +160,6 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
         try {
 
-
         $order = Order::query()
             ->where('id','=',$id)
             ->first();
@@ -175,11 +173,9 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
                 return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
 
-
             }else{
 
                 $rules = [
-
                     'currency' => 'required',
                     'amount' => 'required|numeric',
                 ];
@@ -231,7 +227,6 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
                     return self::returnResponseDataApi(new OrderClientDetailResource($order),"تم الدفع من قبل لهذا الطلب",201,201);
                 }
-
             }
         }
         } catch (\Exception $exception) {
