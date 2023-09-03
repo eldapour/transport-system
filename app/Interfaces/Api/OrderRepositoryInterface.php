@@ -15,6 +15,8 @@ interface OrderRepositoryInterface{
     public function addNewOrder(Request $request) : JsonResponse;
     public function orderDetail($id): JsonResponse;
     public function addPaymentForOrder(Request $request,$id): JsonResponse;
+    public function updateOrder(Request $request,$id): JsonResponse;
+    public function deleteOrder($id): JsonResponse;
 
 
 }
