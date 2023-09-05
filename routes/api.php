@@ -40,6 +40,8 @@ Route::group(['middleware' => 'check-lang'], function (){
         Route::post('addNewOrder',[OrderController::class,'addNewOrder']);
         Route::get('orderDetail/{id}',[OrderController::class,'orderDetail']);
         Route::post('addPaymentForOrder/{id}',[OrderController::class,'addPaymentForOrder']);
+        Route::post('updateOrder/{id}',[OrderController::class,'updateOrder']);
+        Route::delete('deleteOrder/{id}',[OrderController::class,'deleteOrder']);
 
 
     });

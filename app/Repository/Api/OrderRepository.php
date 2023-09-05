@@ -146,7 +146,6 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
                 return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
 
-
             }else{
 
                 return self::returnResponseDataApi(new OrderClientDetailResource($order),"تم الحصول علي تفاصيل الطلب بنجاح",200);
@@ -161,7 +160,6 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
         try {
 
-
         $order = Order::query()
             ->where('id','=',$id)
             ->first();
@@ -175,11 +173,9 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
                 return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
 
-
             }else{
 
                 $rules = [
-
                     'currency' => 'required',
                     'amount' => 'required|numeric',
                 ];
@@ -231,7 +227,6 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
                     return self::returnResponseDataApi(new OrderClientDetailResource($order),"تم الدفع من قبل لهذا الطلب",201,201);
                 }
-
             }
         }
         } catch (\Exception $exception) {
@@ -239,6 +234,127 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
             return self::returnResponseDataApi($exception->getMessage(),500,false,500);
         }
 
+
+    }
+
+
+    public function updateOrder(Request $request,$id): JsonResponse
+    {
+
+        try {
+
+            $order = Order::query()
+                ->where('id','=',$id)
+                ->first();
+
+            if(!$order){
+                return self::returnResponseDataApi(null,"الطلب غير موجود",404,404);
+
+            }else{
+
+                if($order->user_id != Auth::guard('user-api')->id()){
+
+                    return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
+
+                }else{
+
+                    $rules = [
+                        'image' => 'nullable|mimes:jpg,png,jpeg',
+                        'from_warehouse' => 'required|exists:warehouses,id',
+                        'to_warehouse' => 'required|exists:warehouses,id',
+                        'weight' => 'required|numeric',
+                        'qty' => 'required|numeric',
+                        'value' => 'required|numeric',
+                        'type' => 'required',
+                        'description' => 'required',
+                    ];
+
+                    $validator = Validator::make($request->all(), $rules, [
+                        'image.mimes' => 406,
+                    ]);
+
+                    if ($validator->fails()) {
+                        $errors = collect($validator->errors())->flatten(1)[0];
+
+                        if (is_numeric($errors)) {
+                            $errors_arr = [
+                                406 => 'Failed,The image must be an jpg,png,jpeg',
+                            ];
+
+                            $code = collect($validator->errors())->flatten(1)[0];
+                            return self::returnResponseDataApi(null, $errors_arr[$errors] ?? 500, $code);
+                        }
+                        return self::returnResponseDataApi(null,$validator->errors()->first(),422);
+                    }
+
+                    if($request->from_warehouse == $request->to_warehouse){
+
+                        return self::returnResponseDataApi(null,"يجب عدم اضافه موقع الشحنه مثل واجهه الشحنه",409);
+                    }
+
+                    if ($image = $request->file('image')) {
+
+                        $destinationPath = 'uploads/orders/';
+                        $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                        $image->move($destinationPath, $profileImage);
+                        $request['image'] = $profileImage;
+
+                    }
+
+                    $order->update([
+                        'image' => $request->file('image') != null ?  'uploads/orders/'.$profileImage : $order->image,
+                        'from_warehouse' => $request->from_warehouse,
+                        'to_warehouse' => $request->to_warehouse,
+                        'weight' => $request->weight,
+                        'qty' => $request->qty,
+                        'value' => $request->value,
+                        'type' => $request->type,
+                        'status' => 'hanging',
+                        'description' => $request->description
+                    ]);
+
+                    if ($order->save()) {
+                        return self::returnResponseDataApi(new OrderResource($order), "تم تعديل بيانات الطلب بنجاح", 200);
+
+                    }else{
+
+                        return self::returnResponseDataApi(null,"يوجد خطاء ما اثناء دخول البيانات",500,500);
+                    }
+
+                }
+            }
+
+
+        } catch (\Exception $exception) {
+
+            return self::returnResponseDataApi($exception->getMessage(),500,false,500);
+        }
+
+    }
+
+
+    public function deleteOrder($id): JsonResponse
+    {
+
+        $order = Order::query()
+            ->where('id','=',$id)
+            ->first();
+
+        if(!$order){
+            return self::returnResponseDataApi(null,"الطلب غير موجود",404,404);
+
+        }else{
+
+            if($order->user_id != Auth::guard('user-api')->id()){
+
+                return self::returnResponseDataApi(null,"هذا الطلب لا ينتمي لهذا العميل!",403,403);
+
+            }else{
+
+                $order->delete();
+                return self::returnResponseDataApi(null,"تم حذف الطلب بنجاح",200);
+            }
+        }
 
     }
 }
