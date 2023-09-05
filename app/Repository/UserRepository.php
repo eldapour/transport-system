@@ -16,7 +16,7 @@ class UserRepository implements UserInterface
     {
         if ($request->ajax()) {
             $users = User::query()
-                ->where('type', 'person')->latest()->get();
+                ->where('user_type', 'person')->latest()->get();
             return DataTables::of($users)
                 ->addColumn('action', function ($users) {
                     return '
@@ -52,7 +52,7 @@ class UserRepository implements UserInterface
     {
         if ($request->ajax()) {
             $users = User::query()
-                ->where('type', 'company')->latest()->get();
+                ->where('user_type', 'company')->latest()->get();
             return DataTables::of($users)
                 ->addColumn('action', function ($users) {
                     return '

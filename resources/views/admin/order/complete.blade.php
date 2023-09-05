@@ -97,8 +97,19 @@
         ]
         showData('{{route('orderComplete')}}', columns);
 
-        showEditModal('{{route('orderShow',':id')}}');
-        editScript();
+        function showPrint(routeOfEdit){
+            $(document).on('click', '.editBtn', function () {
+                var id = $(this).data('id')
+                var url = routeOfEdit;
+                url = url.replace(':id', id)
+
+                window.location.href = url;
+
+            })
+        }
+
+        showPrint('{{route('orderShow',':id')}}');
+
     </script>
 @endsection
 
