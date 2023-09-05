@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "mcamara/laravel-localization": "^1.7",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "tymon/jwt-auth": "^1.0",
         "yajra/laravel-datatables": "^1.5",
         "yoeunes/toastr": "^1.2"

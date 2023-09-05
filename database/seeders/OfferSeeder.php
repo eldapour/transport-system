@@ -46,7 +46,7 @@ class OfferSeeder extends Seeder
                 'order_id' => 4,
                 'date' => Carbon::now(),
                 'price' => 20,
-                'status' => 0,
+                'status' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
 

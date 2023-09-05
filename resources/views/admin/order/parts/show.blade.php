@@ -58,21 +58,21 @@
         <div class="row">
             <div class="col-4">
                 <h6>فاتورة ضريبية.</h6>
-                <h6>شركة الوطنى السريع للنقليات.</h6>
-                <p>طريق ابن العميد , السلى</p>
-                <p>صندوق بريد:2417, الرياض 14273, المملكة العربية السعودية</p>
-                <p>رقم السجل التجارى: 1010352157</p>
-                <p>رقم الضريبى: 310365617400003</p>
+                <h6>{{ $invoice->company_name_ar }}</h6>
+                <p>{{ $invoice->location_ar }}</p>
+                <p> صندوق بريد: {{ $invoice->po_box }}</p>
+                <p>رقم السجل التجارى: {{ $invoice->cr_no }}</p>
+                <p>رقم الضريبى: {{ $invoice->vat_no }}</p>
             </div>
             <div class="col-4 d-flex justify-content-center align-items-center">
                 <h6>simplified tax invoice <br> consignment No :</h6>
             </div>
             <div class="col-4 text-start">
-                <h6>national express transport company</h6>
-                <p>Ibn al-ameed road, al-sulay</p>
-                <p>P.O Box: 24117, Al-Riyadh 14273,KSA</p>
-                <p>CR No: 1010352157</p>
-                <p>VAT No. : 310365617400003</p>
+                <h6>{{ $invoice->company_name_en }}</h6>
+                <p>{{ $invoice->location_en }}</p>
+                <p>P.O Box: {{ $invoice->po_box }}</p>
+                <p>CR No: {{ $invoice->cr_no }}</p>
+                <p>VAT No. : {{ $invoice->vat_no }}</p>
             </div>
         </div>
         <div class="row">
@@ -87,13 +87,13 @@
                     <div class="row p-2">
                         <div class="col-5">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
                                 <label class="form-check-label" for="flexCheckDefault">
                                     من الناقل
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
                                 <label class="form-check-label" for="flexCheckChecked">
                                     من الباب الى الباب
                                 </label>
@@ -108,7 +108,7 @@
                             <p>تكلفة التوصيل</p>
                         </div>
                         <div class="col-3 d-flex justify-content-center">
-                            <img src="{{ asset('assets/invoice') }}/photo/download.png" style="height: 50px;">
+                            {!! QrCode::size(50)->generate(route('orderShow',$offer->order_id)) !!}
                         </div>
                     </div>
                 </div>
@@ -149,13 +149,13 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckChecked" >
                                 <label class="form-check-label" for="flexCheckChecked">
                                     COD
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckChecked">
                                 <label class="form-check-label" for="flexCheckChecked">
                                     bank transfer
                                 </label>
@@ -274,8 +274,36 @@
 
 <script src="{{ asset('assets/invoice') }}/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('assets/invoice') }}/js/all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    window.print();
+    $(document).ready(function() {
+        // Function to print the page
+        function printPage() {
+            window.print();
+        }
+        @if($offer->status == 'hanging')
+            // Function to navigate to another URL
+            function navigateToAnotherURL() {
+                window.location.href = '{{ route('orderNew') }}'; // Replace with the URL you want to navigate to
+            }
+        @elseif($offer->order->status == 'waiting')
+            // Function to navigate to another URL
+            function navigateToAnotherURL() {
+                window.location.href = '{{ route('orderWaiting') }}'; // Replace with the URL you want to navigate to
+            }
+        @else
+        // Function to navigate to another URL
+        function navigateToAnotherURL() {
+            window.location.href = '{{ route('orderComplete') }}'; // Replace with the URL you want to navigate to
+        }
+        @endif
+
+        // Print the page when it's loaded
+        printPage();
+        // Delay the navigation by a few seconds (e.g., 3 seconds)
+        setTimeout(navigateToAnotherURL, 3000); // 3000 milliseconds = 3 seconds
+    });
 </script>
+
 </body>
 </html>
