@@ -36,4 +36,9 @@ class OrderController extends Controller
     {
         return $this->orderInterface->show($order);
     }
+
+    public function invoice($order)
+    {
+        return $this->orderInterface->invoice($order);
+    }
 }

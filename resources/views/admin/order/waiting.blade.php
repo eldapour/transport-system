@@ -95,8 +95,14 @@
         ]
         showData('{{route('orderWaiting')}}', columns);
 
+
+
+        showEditModal('{{route('orderShow',':id')}}');
+        editScript();
+
+
         function showPrint(routeOfEdit){
-            $(document).on('click', '.editBtn', function () {
+            $(document).on('click', '.printBtn', function () {
                 var id = $(this).data('id')
                 var url = routeOfEdit;
                 url = url.replace(':id', id)
@@ -106,7 +112,7 @@
             })
         }
 
-        showPrint('{{route('orderShow',':id')}}');
+        showPrint('{{route('invoice',':id')}}');
 
     </script>
 @endsection

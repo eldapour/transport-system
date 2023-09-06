@@ -56,6 +56,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::get('orderNew',[OrderController::class,'new'])->name('orderNew');
     Route::get('orderWaiting',[OrderController::class,'waiting'])->name('orderWaiting');
     Route::get('orderShow/{order}',[OrderController::class,'show'])->name('orderShow');
+    Route::get('invoice/{order}',[OrderController::class,'invoice'])->name('invoice');
 
     #============================ setting ==================================
     Route::get('setting',[SettingController::class,'index'])->name('settingIndex');
