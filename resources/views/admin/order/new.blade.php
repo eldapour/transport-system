@@ -105,7 +105,9 @@
             })
         }
 
-        showPrint('{{route('orderShow',':id')}}');
+
+        showEditModal('{{route('orderShow',':id')}}');
+        editScript();
 
     </script>
 @endsection

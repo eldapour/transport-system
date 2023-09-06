@@ -10,4 +10,5 @@ Interface OrderInterface {
 
     public function new($request);
     public function show($order);
+    public function invoice($order);
 }

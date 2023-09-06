@@ -127,4 +127,17 @@ class OrderRepository implements OrderInterface
         }
         return view('admin.order.parts.show',compact('offer'));
     }
+
+    public function invoice($order)
+    {
+        $offer = Offer::query()
+            ->where('order_id',$order)
+            ->with('order')
+            ->first();
+        if (!$offer){
+            $offer = Order::query()
+                ->find($order);
+        }
+        return view('admin.order.parts.invoice',compact('offer'));
+    }
 }
