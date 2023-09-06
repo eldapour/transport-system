@@ -274,37 +274,6 @@
 
 <script src="{{ asset('assets/invoice') }}/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('assets/invoice') }}/js/all.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    {{--$(document).ready(function() {--}}
-    {{--    // Function to print the page--}}
-    {{--    function printPage() {--}}
-    {{--        window.print();--}}
-    {{--    }--}}
-    {{--    @if($offer->status == 'hanging')--}}
-    {{--        // Function to navigate to another URL--}}
-    {{--        function navigateToAnotherURL() {--}}
-    {{--            window.location.href = '{{ route('orderNew') }}'; // Replace with the URL you want to navigate to--}}
-    {{--        }--}}
-    {{--    @elseif($offer->order->status == 'waiting')--}}
-    {{--        // Function to navigate to another URL--}}
-    {{--        function navigateToAnotherURL() {--}}
-    {{--            window.location.href = '{{ route('orderWaiting') }}'; // Replace with the URL you want to navigate to--}}
-    {{--        }--}}
-    {{--    @else--}}
-    {{--    // Function to navigate to another URL--}}
-    {{--    function navigateToAnotherURL() {--}}
-    {{--        window.location.href = '{{ route('orderComplete') }}'; // Replace with the URL you want to navigate to--}}
-    {{--    }--}}
-    {{--    @endif--}}
-
-    {{--    // Print the page when it's loaded--}}
-    {{--    printPage();--}}
-    {{--    // Delay the navigation by a few seconds (e.g., 3 seconds)--}}
-    {{--    setTimeout(navigateToAnotherURL, 3000); // 3000 milliseconds = 3 seconds--}}
-    {{--});--}}
-
-</script>
 
 </body>
 </html>

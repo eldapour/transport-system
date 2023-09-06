@@ -88,7 +88,12 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-        <button type="button" data-id="{{ $offer->order->id ?? $offer->id }}" class="btn btn-success printBtn">
+        <button type="button" data-id="{{ $offer->order->id ?? $offer->id }}" id="printBtn"
+                @if(isset($offer->order->id))
+                    class="btn btn-success printBtn">
+                @else
+                    class="btn btn-danger printBtn disabled">
+                @endif
             <i class="fa fa-print"></i>
             طباعة
         </button>
@@ -99,26 +104,30 @@
 
     $('.dropify').dropify();
 
-
     $(document).ready(function() {
-        $('.printBtn').on('click',function() {
-            // Open a new window with a small size
-            var printWindow = window.open('', '',  '');
+        $("#printBtn").on('click',function() {
 
-            // Load the Blade view into the new window
             $.get('{{ route('invoice',$offer->order->id ?? $offer->id) }}', function(data) {
-                printWindow.document.open();
-                printWindow.document.write(data);
-                printWindow.document.close();
+                // Create a hidden iframe and set its content to the Blade view
+                var iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                iframe.contentWindow.document.open();
+                iframe.contentWindow.document.write(data);
+                iframe.contentWindow.document.close();
 
-                setTimeout(function () {
-                    printWindow.print();
+
+                // Print the iframe's content
+                setTimeout(function() {
+                    iframe.contentWindow.print();
                 }, 1000);
 
-                setTimeout(function () {
-                    printWindow.close();
-                }, 2000); // Close the window after 1 second (adjust as needed)
-            });
+                // Remove the iframe from the DOM after printing
+                setTimeout(function() {
+                    document.body.removeChild(iframe);
+                }, 2000); // Adjust the delay as needed
+            })
+
         });
     });
 </script>
