@@ -29,22 +29,29 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
             ->where('status','=','waiting')
             ->get();
 
+        $orders = Order::query()
+            ->whereHas('offer', fn(Builder $builder) =>
+            $builder->where('driver_id','=',Auth::guard('user-api')->id())
+            )
+            ->where('status','=','waiting')
+            ->orWhere('status','=','hanging')
+            ->get();
+
         if(request('search') == 'hanging'){
 
-            $data['allOfOrdersHanging'] = OrderResource::collection($allOfOrdersHanging);
+            $data['orders'] = OrderResource::collection($allOfOrdersHanging);
             return self::returnResponseDataApi($data,"تم الحصول علي جميع الطلبيات المعلقه",200);
 
 
         }elseif (request('search') == 'waiting'){
 
-            $data['ordersOfDriverWaiting'] = OrderResource::collection( $ordersOfDriverWaiting);
+            $data['orders'] = OrderResource::collection( $ordersOfDriverWaiting);
 
             return self::returnResponseDataApi($data,"تم الحصول علي جميع طلبيات انتظار الدفع",200);
 
         }else{
 
-            $data['allOfOrdersHanging'] = OrderResource::collection($allOfOrdersHanging);
-            $data['ordersOfDriverWaiting'] = OrderResource::collection( $ordersOfDriverWaiting);
+            $data['orders'] = OrderResource::collection($orders);
 
             return self::returnResponseDataApi($data,"تم الحصول علي جميع الطلبات المعلقه وطلبات انتظار الدفع",200);
         }
