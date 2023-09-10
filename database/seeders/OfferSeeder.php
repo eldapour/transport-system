@@ -18,8 +18,8 @@ class OfferSeeder extends Seeder
     {
         $data = [
             [
-                'user_id' => 2,
-                'driver_id' => 4,
+                'user_id' => 4,
+                'driver_id' => 2,
                 'order_id' => 2,
                 'date' => Carbon::now(),
                 'price' => 20,
@@ -29,8 +29,8 @@ class OfferSeeder extends Seeder
 
             ],
             [
-                'user_id' => 2,
-                'driver_id' => 4,
+                'user_id' => 4,
+                'driver_id' => 2,
                 'order_id' => 3,
                 'date' => Carbon::now(),
                 'price' => 20,
@@ -41,8 +41,8 @@ class OfferSeeder extends Seeder
             ],
 
             [
-                'user_id' => 2,
-                'driver_id' => 4,
+                'user_id' => 4,
+                'driver_id' => 2,
                 'order_id' => 4,
                 'date' => Carbon::now(),
                 'price' => 20,
