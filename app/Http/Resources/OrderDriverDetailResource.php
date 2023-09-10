@@ -27,7 +27,7 @@ class OrderDriverDetailResource extends JsonResource
             'value' => $this->value,
             'type' => $this->type,
             'description' => $this->description,
-            'arrival-information' => $this->status == 'waiting' ? null : [
+            'arrival-information' => $this->status == 'waiting' || $this->status == 'hanging' ? null : [
                 'price' => $this->offer->price,
                 'date-arrival' => $this->offer->date,
             ],
