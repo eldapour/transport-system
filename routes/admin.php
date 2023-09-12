@@ -38,6 +38,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::get('userPerson',[UserController::class,'indexPerson'])->name('userPerson.index');
     Route::get('userCompany',[UserController::class,'indexCompany'])->name('userCompany.index');
     Route::POST('user/delete',[UserController::class,'delete'])->name('user_delete');
+    Route::POST('changeStatus',[UserController::class,'changeStatus'])->name('changeStatus');
 
     #============================ driver ===================================
     Route::resource('driver',DriverController::class);

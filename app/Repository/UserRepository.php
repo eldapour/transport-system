@@ -33,9 +33,9 @@ class UserRepository implements UserInterface
                 })
                 ->editColumn('status', function ($user) {
                     if ($user->status == 1)
-                        return '<span class="btn btn-sm btn-success">مفعل</span>';
+                        return '<button class="btn btn-sm btn-success statusBtn" data-id="' . $user->id . '">مفعل</button>';
                     else
-                        return '<span class="btn btn-sm btn-danger">غير مفعل</span>';
+                        return '<button class="btn btn-sm btn-danger statusBtn" data-id="' . $user->id . '">غير مفعل</button>';
                 })
                 ->editColumn('city_id', function ($user) {
                     return $user->city->name_ar;
@@ -69,14 +69,13 @@ class UserRepository implements UserInterface
                 })
                 ->editColumn('status', function ($user) {
                     if ($user->status == 1)
-                        return '<span class="btn btn-sm btn-success">مفعل</span>';
+                        return '<button class="btn btn-sm btn-success statusBtn" data-id="' . $user->id . '">مفعل</button>';
                     else
-                        return '<span class="btn btn-sm btn-danger">غير مفعل</span>';
+                        return '<button class="btn btn-sm btn-danger statusBtn" data-id="' . $user->id . '">غير مفعل</button>';
                 })
                 ->editColumn('city_id', function ($user) {
                     return $user->city->name_ar;
                 })
-
                 ->escapeColumns([])
                 ->make(true);
         } else {
@@ -93,6 +92,22 @@ class UserRepository implements UserInterface
         }
         $admin->delete();
         return response(['message' => 'تم الحذف بنجاح', 'status' => 200], 200);
+    }
+
+    public function changeStatus($request)
+    {
+        $user = User::findOrFail($request->id);
+
+        ($user->status == 1) ? $user->status = 0 : $user->status = 1;
+
+        $user->save();
+
+        if ($user->status == 1){
+            return response()->json('200');
+        }else {
+            return response()->json('201');
+        }
+
     }
 
 
