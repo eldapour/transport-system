@@ -68,5 +68,11 @@ class UserController extends Controller{
         return $this->userRepositoryInterface->deleteAccount();
     }
 
+    public function setting(): JsonResponse
+    {
+
+        return $this->userRepositoryInterface->setting();
+    }
+
 
 }

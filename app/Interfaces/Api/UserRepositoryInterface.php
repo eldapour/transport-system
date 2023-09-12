@@ -16,5 +16,6 @@ interface UserRepositoryInterface{
     public function changePassword(Request $request): JsonResponse;
     public function logout(): JsonResponse;
     public function deleteAccount(): JsonResponse;
+    public function setting(): JsonResponse;
 
 }

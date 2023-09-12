@@ -31,6 +31,7 @@ Route::group(['middleware' => 'check-lang'], function (){
     });
 
 
+    Route::get('setting',[UserController::class,'setting'])->middleware('jwt');
 
     Route::group(['prefix' => 'orders','middleware' => ['jwt','check-client-auth']], function () {
 
