@@ -19,13 +19,18 @@ class UserController extends Controller
         return $this->userInterface->indexPerson($request);
     }
 
+    public function indexCompany(Request $request)
+    {
+        return $this->userInterface->indexCompany($request);
+    }
+
     public function delete(Request $request)
     {
         return $this->userInterface->delete($request);
     }
 
-    public function indexCompany(Request $request)
+    public function changeStatus(Request $request)
     {
-        return $this->userInterface->indexCompany($request);
+        return $this->userInterface->changeStatus($request);
     }
 }

@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <!--begin::Table-->
-                        <table class="table table-striped table-bordered text-nowrap w-100" id="dataTable">
+                        <table class="table dataTable table-striped table-bordered text-nowrap w-100" id="dataTable">
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
@@ -97,6 +97,28 @@
         showData('{{route('userCompany.index')}}', columns);
         // Delete Using Ajax
         deleteScript('{{route('user_delete')}}');
+
+        $(document).on('click', '.statusBtn', function () {
+
+            let id = $(this).data('id');
+            $.ajax({
+                type: 'post',
+                url: '{{ route('changeStatus') }}',
+                data: {
+                    '_token' : '{{ csrf_token() }}',
+                    'id': id
+                },success : function (data){
+                    if (data == '200'){
+                        toastr.success('تم التفعيل بنجاح');
+                        $('.dataTable').DataTable().ajax.reload();
+                    }else {
+                        toastr.success('تم الغاء التفعيل بنجاح');
+                        $('.dataTable').DataTable().ajax.reload();
+                    }
+                }
+
+            });
+        });
     </script>
 @endsection
 
