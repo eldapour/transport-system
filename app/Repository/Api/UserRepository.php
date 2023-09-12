@@ -3,9 +3,11 @@
 namespace App\Repository\Api;
 
 use App\Http\Resources\CityResource;
+use App\Http\Resources\SettingResource;
 use App\Http\Resources\UserResource;
 use App\Interfaces\Api\UserRepositoryInterface;
 use App\Models\City;
+use App\Models\Setting;
 use App\Models\User;
 use App\Repository\ResponseApi;
 use Illuminate\Http\JsonResponse;
@@ -313,6 +315,31 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                 $user->delete();
                 Auth::guard('user-api')->logout();
                 return self::returnResponseDataApi(null,"تم حذف الحساب بنجاح وتم تسجيل الخروج من التطبيق",200);
+            }
+
+
+        } catch (\Exception $exception) {
+
+            return self::returnResponseDataApi(null,$exception->getMessage(),500,500);
+        }
+    }
+
+
+
+    public function setting(): JsonResponse
+    {
+
+        try {
+
+            $setting = Setting::query()->first();
+
+            if(!$setting){
+
+                return self::returnResponseDataApi(null,"لا يوجد اي اعدادات بالموقع الي الان",404,404);
+
+            }else{
+
+                return self::returnResponseDataApi(new SettingResource($setting),"تم الحصول علي بيانات الشروط والاحكام بنجاح",200);
             }
 
 
