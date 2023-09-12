@@ -7,6 +7,17 @@
     الاعدادات
 @endsection
 @section('content')
+    <style>
+        .ck-editor__editable[role="textbox"] {
+            /* editing area */
+            min-height: 200px;
+        }
+        .ck-content .image {
+            /* block images */
+            max-width: 80%;
+            margin: 20px auto;
+        }
+    </style>
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
@@ -53,10 +64,10 @@
                             <hr>
                             <div class="col-12">
                                 <label for="details_ar" class="form-control-label">الشروط والاحكام بالعربية</label>
-                                <textarea class="form-control" name="conditions_ar" id="details_ar" rows="10"
+                                <textarea class="form-control" name="conditions_ar" id="details_ar"
                                           required>{{ $setting->conditions_ar }}</textarea>
                                 <label for="details_en" class="form-control-label">الشروط والاحكام بالانجليزية</label>
-                                <textarea class="form-control" name="conditions_en" id="details_en" rows="10"
+                                <textarea class="form-control" name="conditions_en" id="details_en"
                                           required>{{ $setting->conditions_en }}</textarea>
                             </div>
                         </div>
@@ -75,6 +86,13 @@
     @include('admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
+    <script src="{{ asset('assets/ck5/ckeditor.js') }}"></script>
+
+    <script>
+        ClassicEditor.create( document.querySelector( '#details_ar' ) );
+        ClassicEditor.create( document.querySelector( '#details_en' ) );
+    </script>
+
     <script>
         $('.dropify').dropify()
         editScript();
