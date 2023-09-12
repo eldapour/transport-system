@@ -45,10 +45,14 @@ class OrderRepository extends ResponseApi implements OrderRepositoryInterface {
 
     public function ordersNotCompleted(): JsonResponse
     {
+
+
         $ordersCompleted = Order::query()
-            ->where('user_id','=', Auth::guard('user-api')->id())
-            ->where('status','=','hanging')
-            ->orWhere('status','=','waiting')
+            ->orWhere(function ($query) {
+                $query->where('status','=','hanging')
+                    ->orWhere('status','=','waiting');
+            })
+            ->where('user_id','=', auth('user-api')->id())
             ->get();
 
 
