@@ -36,7 +36,7 @@ class UserRepository extends ResponseApi implements UserRepositoryInterface{
                 'name' => 'required|string|max:50',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6|confirmed',
-                'national_id' => 'required|numeric',
+                'national_id' => 'required|numeric|unique:users,national_id',
                 'phone' => 'required|numeric|unique:users,phone',
                 'city_id' => 'required|exists:cities,id',
                 'type' => 'required|in:user',
