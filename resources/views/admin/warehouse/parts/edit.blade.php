@@ -28,10 +28,10 @@
                 </div>
 
                 <div class="col-12">
-                    <label for="lan" class="form-control-label">خط الطول</label>
-                    <input type="number" class="form-control" value="{{ $warehouse->lan }}" name="lan" id="lan" placeholder="مثال : 46.675297" required>
-                    <label for="lat" class="form-control-label">خط العرض</label>
-                    <input type="number" class="form-control" value="{{ $warehouse->lat }}" name="lat" id="lat" placeholder="مثال : 24.713552" required>
+                    <label for="lan" class="form-control-label">(long) خط الطول</label>
+                    <input type="text" class="form-control" value="{{ $warehouse->lan }}" name="lan" id="lan" placeholder="مثال : 46.675297" required>
+                    <label for="lat" class="form-control-label">(lat) خط العرض</label>
+                    <input type="text" class="form-control" value="{{ $warehouse->lat }}" name="lat" id="lat" placeholder="مثال : 24.713552" required>
                 </div>
 
                 <div class="col-12">

@@ -19,9 +19,9 @@ class CreateOrdersTable extends Migration
             $table->longText('image')->comment('صوره الشحنه');
             $table->unsignedBigInteger('from_warehouse')->comment('من المخزن الرئيسي');
             $table->unsignedBigInteger('to_warehouse')->comment('الي المخزن الفرعي');
-            $table->double('weight',10,2)->comment('وزن الحموله');
-            $table->integer('qty')->comment('الكميه');
-            $table->double('value',10,2)->comment('قيمه البضاعه');
+            $table->double('weight',20,2)->comment('وزن الحموله');
+            $table->bigInteger('qty')->comment('الكميه');
+            $table->double('value',20,2)->comment('قيمه البضاعه');
             $table->text('type')->comment('نوع الشحنه');
             $table->enum('status',['hanging','waiting','complete'])->comment('حاله الشحنه معلقه او في انتظار الدفع او مكتمله');
             $table->longText('description')->comment('تفاصيل الشحنه');
